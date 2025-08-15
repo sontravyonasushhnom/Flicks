@@ -1,0 +1,93 @@
+﻿#include "ImguiTheme.h"
+
+const ImVec2 buttonSize(110.0f, 0.0f);
+
+void ImguiTheme() {
+    ImGuiStyle& style = ImGui::GetStyle();
+
+    style.Alpha = 1.0f;
+    style.DisabledAlpha = 1.0f;
+    style.WindowPadding = ImVec2(12.0f, 12.0f);
+    style.WindowRounding = 11.5f;
+    style.WindowBorderSize = 0.0f;
+    style.WindowMinSize = ImVec2(20.0f, 20.0f);
+    style.WindowTitleAlign = ImVec2(0.5f, 0.5f);
+    style.WindowMenuButtonPosition = ImGuiDir_Right;
+    style.ChildRounding = 0.0f;
+    style.ChildBorderSize = 1.0f;
+    style.PopupRounding = 0.0f;
+    style.PopupBorderSize = 1.0f;
+    style.FramePadding = ImVec2(20.0f, 3.4f);
+    style.FrameRounding = 11.9f;
+    style.FrameBorderSize = 0.0f;
+    style.ItemSpacing = ImVec2(4.3f, 5.5f);
+    style.ItemInnerSpacing = ImVec2(7.1f, 1.8f);
+    style.CellPadding = ImVec2(12.1f, 9.2f);
+    style.IndentSpacing = 0.0f;
+    style.ColumnsMinSpacing = 4.9f;
+    style.ScrollbarSize = 11.6f;
+    style.ScrollbarRounding = 15.9f;
+    style.GrabMinSize = 3.7f;
+    style.GrabRounding = 20.0f;
+    style.TabRounding = 0.0f;
+    style.TabBorderSize = 0.0f;
+    style.ColorButtonPosition = ImGuiDir_Right;
+    style.ButtonTextAlign = ImVec2(0.5f, 0.5f);
+    style.SelectableTextAlign = ImVec2(0.0f, 0.0f);
+
+    // Цвета
+    ImVec4* C = style.Colors;
+    C[ImGuiCol_Text] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+    C[ImGuiCol_TextDisabled] = ImVec4(0.2745f, 0.3176f, 0.4510f, 1.0f);
+    C[ImGuiCol_WindowBg] = ImVec4(0.0784f, 0.0863f, 0.1020f, 1.0f);
+    C[ImGuiCol_ChildBg] = ImVec4(0.0925f, 0.1003f, 0.1159f, 1.0f);
+    C[ImGuiCol_PopupBg] = C[ImGuiCol_WindowBg];
+    C[ImGuiCol_Border] = ImVec4(0.1569f, 0.1686f, 0.1922f, 1.0f);
+    C[ImGuiCol_BorderShadow] = C[ImGuiCol_WindowBg];
+    C[ImGuiCol_FrameBg] = ImVec4(0.1121f, 0.1262f, 0.1545f, 1.0f);
+    C[ImGuiCol_FrameBgHovered] = C[ImGuiCol_Border];
+    C[ImGuiCol_FrameBgActive] = C[ImGuiCol_Border];
+    C[ImGuiCol_TitleBg] = ImVec4(0.0471f, 0.0549f, 0.0706f, 1.0f);
+    C[ImGuiCol_TitleBgActive] = C[ImGuiCol_TitleBg];
+    C[ImGuiCol_TitleBgCollapsed] = C[ImGuiCol_WindowBg];
+    C[ImGuiCol_MenuBarBg] = ImVec4(0.0980f, 0.1059f, 0.1216f, 1.0f);
+    C[ImGuiCol_ScrollbarBg] = C[ImGuiCol_TitleBg];
+    C[ImGuiCol_ScrollbarGrab] = ImVec4(0.1176f, 0.1333f, 0.1490f, 1.0f);
+    C[ImGuiCol_ScrollbarGrabHovered] = C[ImGuiCol_Border];
+    C[ImGuiCol_ScrollbarGrabActive] = C[ImGuiCol_ScrollbarGrab];
+    C[ImGuiCol_CheckMark] = ImVec4(0.9725f, 1.0f, 0.4980f, 1.0f);
+    C[ImGuiCol_SliderGrab] = ImVec4(0.9720f, 1.0f, 0.4980f, 1.0f);
+    C[ImGuiCol_SliderGrabActive] = ImVec4(1.0f, 0.7953f, 0.4980f, 1.0f);
+    C[ImGuiCol_Button] = ImVec4(0.1176f, 0.1333f, 0.1490f, 1.0f);
+    C[ImGuiCol_ButtonHovered] = ImVec4(0.1822f, 0.1898f, 0.1974f, 1.0f);
+    C[ImGuiCol_ButtonActive] = ImVec4(0.1545f, 0.1545f, 0.1545f, 1.0f);
+    C[ImGuiCol_Header] = ImVec4(0.1415f, 0.1630f, 0.2060f, 1.0f);
+    C[ImGuiCol_HeaderHovered] = ImVec4(0.1073f, 0.1073f, 0.1073f, 1.0f);
+    C[ImGuiCol_HeaderActive] = C[ImGuiCol_WindowBg];
+    C[ImGuiCol_Separator] = ImVec4(0.1293f, 0.1479f, 0.1931f, 1.0f);
+    C[ImGuiCol_SeparatorHovered] = ImVec4(0.1569f, 0.1843f, 0.2510f, 1.0f);
+    C[ImGuiCol_SeparatorActive] = C[ImGuiCol_SeparatorHovered];
+    C[ImGuiCol_ResizeGrip] = ImVec4(0.1459f, 0.1459f, 0.1459f, 1.0f);
+    C[ImGuiCol_ResizeGripHovered] = C[ImGuiCol_CheckMark];
+    C[ImGuiCol_ResizeGripActive] = ImVec4(1.0f, 1.0f, 1.0f, 1.0f);
+    C[ImGuiCol_Tab] = C[ImGuiCol_WindowBg];
+    C[ImGuiCol_TabHovered] = C[ImGuiCol_Button];
+    C[ImGuiCol_TabActive] = C[ImGuiCol_Button];
+    C[ImGuiCol_TabUnfocused] = C[ImGuiCol_WindowBg];
+    C[ImGuiCol_TabUnfocusedActive] = ImVec4(0.1249f, 0.2736f, 0.5708f, 1.0f);
+    C[ImGuiCol_PlotLines] = ImVec4(0.5216f, 0.6000f, 0.7020f, 1.0f);
+    C[ImGuiCol_PlotLinesHovered] = ImVec4(0.0392f, 0.9804f, 0.9804f, 1.0f);
+    C[ImGuiCol_PlotHistogram] = ImVec4(0.8841f, 0.7941f, 0.5616f, 1.0f);
+    C[ImGuiCol_PlotHistogramHovered] = ImVec4(0.9571f, 0.9571f, 0.9571f, 1.0f);
+    C[ImGuiCol_TableHeaderBg] = C[ImGuiCol_TitleBg];
+    C[ImGuiCol_TableBorderStrong] = C[ImGuiCol_TitleBg];
+    C[ImGuiCol_TableBorderLight] = ImVec4(0.0f, 0.0f, 0.0f, 1.0f);
+    C[ImGuiCol_TableRowBg] = C[ImGuiCol_Button];
+    C[ImGuiCol_TableRowBgAlt] = C[ImGuiCol_MenuBarBg];
+    C[ImGuiCol_TextSelectedBg] = ImVec4(0.9356f, 0.9356f, 0.9356f, 1.0f);
+    C[ImGuiCol_DragDropTarget] = ImVec4(0.4980f, 0.5137f, 1.0f, 1.0f);
+    C[ImGuiCol_NavHighlight] = ImVec4(0.2661f, 0.2890f, 1.0f, 1.0f);
+    C[ImGuiCol_NavWindowingHighlight] = C[ImGuiCol_DragDropTarget];
+    C[ImGuiCol_NavWindowingDimBg] = ImVec4(0.1961f, 0.1765f, 0.5451f, 0.5020f);
+    C[ImGuiCol_ModalWindowDimBg] = C[ImGuiCol_NavWindowingDimBg];
+}
