@@ -36,7 +36,7 @@ bool Renderer::Initialize(HWND hWnd, int width, int height, int refreshRate) {
     sd.SampleDesc.Count = 1;
     sd.Windowed = TRUE;
     sd.SwapEffect = DXGI_SWAP_EFFECT_FLIP_DISCARD;
-    sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH |DXGI_PRESENT_DO_NOT_WAIT | DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
+    sd.Flags = DXGI_SWAP_CHAIN_FLAG_ALLOW_MODE_SWITCH | DXGI_SWAP_CHAIN_FLAG_ALLOW_TEARING | DXGI_SWAP_CHAIN_FLAG_FRAME_LATENCY_WAITABLE_OBJECT;
 
     D3D_FEATURE_LEVEL featureLevel;
     const D3D_FEATURE_LEVEL featureLevelArray[2] = { D3D_FEATURE_LEVEL_11_0, D3D_FEATURE_LEVEL_10_0 };
@@ -183,7 +183,8 @@ void Renderer::BeginFrame(const float clearColor[4]) {
 }
 
 void Renderer::EndFrame() {
-    m_pSwapChain->Present(0, DXGI_PRESENT_DO_NOT_WAIT);
+    UINT presentFlags = DXGI_PRESENT_DO_NOT_WAIT | DXGI_PRESENT_ALLOW_TEARING;
+    m_pSwapChain->Present(0, presentFlags);
 }
 
 void Renderer::DrawField(const FieldCache& fieldCache, const ImVec4& fieldColor) {
