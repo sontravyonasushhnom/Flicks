@@ -550,7 +550,7 @@ void ShowResultsWindow() {
         ImGuiCond_Always, ImVec2(0.5f, 0.5f)
     );
     ImGui::Begin("Results", &showResults,
-        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize);
+        ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
 
     // Static Buffers for Hits Over Time
     static bool plotBuffersInitialized = false;
@@ -860,7 +860,7 @@ void ShowSettingsWindow() {
         firstTime = false;
     }
     ImGui::SetNextWindowSize(ImVec2(400, 600), ImGuiCond_FirstUseEver);
-    ImGui::Begin("Game Settings", &showSettings, ImGuiWindowFlags_AlwaysAutoResize);
+    ImGui::Begin("Game Settings", &showSettings, ImGuiWindowFlags_AlwaysAutoResize | ImGuiWindowFlags_NoTitleBar);
 
     if (ImGui::CollapsingHeader("Colors", ImGuiTreeNodeFlags_DefaultOpen)) {
         ImGui::ColorEdit3("Background", (float*)&settings.bgColor);
@@ -1073,7 +1073,7 @@ void ShowSettingsWindow() {
 
 // Registy MouseSensitivity to mupliplier
 float GetMouseSpeedMultiplier(int mouseSpeed) {
-    // Таблица соответствия: значение реестра -> множитель
+    // Registry value -> multiplier
     static const std::map<int, float> sensitivityMap = {
         {1, 0.0625f},
         {2, 0.125f},
@@ -1088,13 +1088,13 @@ float GetMouseSpeedMultiplier(int mouseSpeed) {
         {20, 3.5f}
     };
 
-    // Если значение есть в таблице, возвращаем
+    // If the value is in the table, return
     auto it = sensitivityMap.find(mouseSpeed);
     if (it != sensitivityMap.end()) {
         return it->second;
     }
 
-    // Если значение выходит за пределы, возвращаем граничное
+    // If the value is out of range, return the boundary
     if (mouseSpeed <= sensitivityMap.begin()->first) {
         return sensitivityMap.begin()->second;
     }
@@ -1102,7 +1102,7 @@ float GetMouseSpeedMultiplier(int mouseSpeed) {
         return sensitivityMap.rbegin()->second;
     }
 
-    // Линейная интерполяция для промежуточных значений
+    // Linear interpolation for intermediate values
     auto it_low = sensitivityMap.lower_bound(mouseSpeed);
     auto it_prev = std::prev(it_low);
     int x0 = it_prev->first;
@@ -1282,6 +1282,7 @@ int WINAPI wWinMain(
     bool prevShowAny = false;
     bool isLastCircle = false;
     bool prevWantCaptureMouse = true;
+    bool forceFinish = false;
 
     while (!done) {
         MSG msg;
@@ -1336,9 +1337,13 @@ int WINAPI wWinMain(
         if (ImGui::IsKeyPressed(ImGuiKey_R)) {
             ResetGame();
             isLastCircle = false;
+            forceFinish = false;
         }
         if (ImGui::IsKeyPressed(ImGuiKey_M)) showSettings = !showSettings;
         if (ImGui::IsKeyPressed(ImGuiKey_Escape)) PostQuitMessage(0);
+        if (ImGui::IsKeyPressed(ImGuiKey_E) && gameState == GAME_RUNNING) {
+            forceFinish = true;
+        }
 
         // Handle circle spawning
         if (gameState == GAME_RUNNING) {
@@ -1353,7 +1358,10 @@ int WINAPI wWinMain(
             }
 
             if (!isLastCircle) {
-                if (gameStartSettings.endBySpawnCount && spawnCount >= gameStartSettings.maxSpawnCount) {
+                if (forceFinish) {
+                    isLastCircle = true;
+                }
+                else if (gameStartSettings.endBySpawnCount && spawnCount >= gameStartSettings.maxSpawnCount) {
                     isLastCircle = true;
                 }
                 else if (!gameStartSettings.endBySpawnCount &&
@@ -1429,10 +1437,13 @@ int WINAPI wWinMain(
                 summary.score = finalScore;
                 summary.timestamp = std::time(nullptr);
 
-                g_allGameSummaries.push_back(summary);
-                SaveGameSummaries();
+                if (!forceFinish) {
+                    g_allGameSummaries.push_back(summary);
+                    SaveGameSummaries();
+                }
 
                 showResults = true;
+                forceFinish = false;
             }
         }
 
